@@ -1,18 +1,16 @@
-import { Square } from "./Square";
+import { Square } from './Square';
 
 declare var require: any
-
 var React = require('react');
 
 export class Board extends React.Component {
-    renderSquare(i : number) {
-        return <Square value={i}/>;
+    renderSquare(i) {
+        return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i) }/>;
     }
 
     render() {
         return (
             <div>
-                <div>{status}</div>
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}

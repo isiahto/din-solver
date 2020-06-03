@@ -3,21 +3,18 @@ declare var require: any
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import { Board } from "./Components/Board";
+import { Game } from "./Components/Game";
 
+
+/* Todos:
+ * - Figure out how to do functional componenet (in order to add typesafe to prop)
+ *
+ * */
 
 export class App extends React.Component {
     render() {
         return (
-            <div className="game">
-                <div className="game-board">
-                    <Board />
-                </div>
-                <div className="game-info">
-                    <div>{/* status */}</div>
-                    <ol>{/* TODO */}</ol>
-                </div>
-            </div>
+            <Game/>
         );
     }
 }
