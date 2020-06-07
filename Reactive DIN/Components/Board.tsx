@@ -1,10 +1,14 @@
+import * as React from 'react';
 import { Square } from './Square';
+import { BoardProps } from './Interfaces';
 
-declare var require: any
-var React = require('react');
 
-export class Board extends React.Component {
-    renderSquare(i) {
+export class Board extends React.Component<BoardProps> {
+    constructor(props) {
+        super(props);
+    }
+
+    renderSquare(i: number) {
         return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i) }/>;
     }
 

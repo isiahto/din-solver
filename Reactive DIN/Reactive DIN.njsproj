@@ -53,6 +53,9 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Components\Game.tsx" />
     <TypeScriptCompile Include="Components\Board.tsx" />
+    <TypeScriptCompile Include="Components\Interfaces.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Components\Square.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

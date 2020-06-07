@@ -1,20 +1,19 @@
-declare var require: any
-var React = require('react');
-
+import * as React from 'react';
 import { Board } from './Board';
+import { States } from './Interfaces';
 
 
-export class Game extends React.Component {
-    constructor(props) {
+export class Game extends React.Component<{}, States> {
+    constructor(props: States) {
         super(props);
         this.state = {
-            history: [{ squares: Array(9).fill(null), }],
+            history: [{ squares: Array(9).fill(null) }],
             stepNumber: 0,
             xIsNext: true,
-        };
+        } as States;
     }
 
-    handleClick(i) {
+    handleClick(i: number) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
@@ -30,7 +29,7 @@ export class Game extends React.Component {
         });
     }
 
-    jumpTo(step) {
+    jumpTo(step: number) {
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2) === 0,
@@ -74,7 +73,7 @@ export class Game extends React.Component {
     }
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares: string[]) {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],

@@ -97,9 +97,12 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Square_1 = __webpack_require__(/*! ./Square */ "./Components/Square.tsx");
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 class Board extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     renderSquare(i) {
         return React.createElement(Square_1.Square, { value: this.props.squares[i], onClick: () => this.props.onClick(i) });
     }
@@ -135,16 +138,15 @@ exports.Board = Board;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Board_1 = __webpack_require__(/*! ./Board */ "./Components/Board.tsx");
 class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            history: [{ squares: Array(9).fill(null), }],
+            history: [{ squares: Array(9).fill(null) }],
             stepNumber: 0,
             xIsNext: true,
-            moves: null,
         };
     }
     handleClick(i) {
@@ -162,22 +164,16 @@ class Game extends React.Component {
         });
     }
     jumpTo(step) {
-        const history = this.state.history.slice(0, step);
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2) === 0,
-            moves: history.map((step, move) => {
-                const desc = move ? 'Go to move #' + move : 'Go to game start';
-                return (React.createElement("li", { key: move },
-                    React.createElement("button", { onClick: () => this.jumpTo(move) }, desc)));
-            }),
         });
     }
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
-        this.state.moves = history.map((step, move) => {
+        const moves = history.map((step, move) => {
             const desc = move ? 'Go to move #' + move : 'Go to game start';
             return (React.createElement("li", { key: move },
                 React.createElement("button", { onClick: () => this.jumpTo(move) }, desc)));
@@ -194,7 +190,7 @@ class Game extends React.Component {
                 React.createElement(Board_1.Board, { squares: current.squares, onClick: (i) => this.handleClick(i) })),
             React.createElement("div", { className: "game-info" },
                 React.createElement("div", null, status),
-                React.createElement("ol", null, this.state.moves))));
+                React.createElement("ol", null, moves))));
     }
 }
 exports.Game = Game;
@@ -232,7 +228,7 @@ function calculateWinner(squares) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Square = void 0;
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 exports.Square = (props) => {
     return (React.createElement("button", { className: "square", onClick: () => props.onClick() }, props.value));
 };
@@ -251,8 +247,8 @@ exports.Square = (props) => {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 const Game_1 = __webpack_require__(/*! ./Components/Game */ "./Components/Game.tsx");
 /* Todos:
  * - Figure out how to do functional componenet (in order to add typesafe to prop)
