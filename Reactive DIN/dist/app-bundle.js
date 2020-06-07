@@ -86,140 +86,9 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./Components/Board.tsx":
-/*!******************************!*\
-  !*** ./Components/Board.tsx ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Board = void 0;
-const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const Square_1 = __webpack_require__(/*! ./Square */ "./Components/Square.tsx");
-class Board extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    renderSquare(i) {
-        return React.createElement(Square_1.Square, { value: this.props.squares[i], onClick: () => this.props.onClick(i) });
-    }
-    render() {
-        return (React.createElement("div", null,
-            React.createElement("div", { className: "board-row" },
-                this.renderSquare(0),
-                this.renderSquare(1),
-                this.renderSquare(2)),
-            React.createElement("div", { className: "board-row" },
-                this.renderSquare(3),
-                this.renderSquare(4),
-                this.renderSquare(5)),
-            React.createElement("div", { className: "board-row" },
-                this.renderSquare(6),
-                this.renderSquare(7),
-                this.renderSquare(8))));
-    }
-}
-exports.Board = Board;
-
-
-/***/ }),
-
-/***/ "./Components/Game.tsx":
-/*!*****************************!*\
-  !*** ./Components/Game.tsx ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Game = void 0;
-const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const Board_1 = __webpack_require__(/*! ./Board */ "./Components/Board.tsx");
-class Game extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            history: [{ squares: Array(9).fill(null) }],
-            stepNumber: 0,
-            xIsNext: true,
-        };
-    }
-    handleClick(i) {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        this.setState({
-            history: history.concat([{ squares: squares, }]),
-            stepNumber: history.length,
-            xIsNext: !this.state.xIsNext,
-        });
-    }
-    jumpTo(step) {
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) === 0,
-        });
-    }
-    render() {
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares);
-        const moves = history.map((step, move) => {
-            const desc = move ? 'Go to move #' + move : 'Go to game start';
-            return (React.createElement("li", { key: move },
-                React.createElement("button", { onClick: () => this.jumpTo(move) }, desc)));
-        });
-        let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
-        }
-        else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-        }
-        return (React.createElement("div", { className: "game" },
-            React.createElement("div", { className: "game-board" },
-                React.createElement(Board_1.Board, { squares: current.squares, onClick: (i) => this.handleClick(i) })),
-            React.createElement("div", { className: "game-info" },
-                React.createElement("div", null, status),
-                React.createElement("ol", null, moves))));
-    }
-}
-exports.Game = Game;
-function calculateWinner(squares) {
-    const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-    for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
-        }
-    }
-    return null;
-}
-
-
-/***/ }),
-
-/***/ "./Components/Square.tsx":
+/***/ "./Components/DINApp.tsx":
 /*!*******************************!*\
-  !*** ./Components/Square.tsx ***!
+  !*** ./Components/DINApp.tsx ***!
   \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -227,11 +96,51 @@ function calculateWinner(squares) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Square = void 0;
+exports.DINApp = void 0;
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-exports.Square = (props) => {
-    return (React.createElement("button", { className: "square", onClick: () => props.onClick() }, props.value));
-};
+class DINApp extends React.Component {
+    render() {
+        return (React.createElement("div", { className: "main" },
+            React.createElement("div", { className: "din-table" },
+                React.createElement("h2", null, "DIN table"),
+                React.createElement("table", null,
+                    React.createElement("thead", null,
+                        React.createElement("tr", null,
+                            React.createElement("th", null, "Skier Code"),
+                            React.createElement("th", null, "1"),
+                            React.createElement("th", null, "2"),
+                            React.createElement("th", null, "3"),
+                            React.createElement("th", null, "4"))),
+                    React.createElement("tbody", null,
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "A"),
+                            React.createElement("td", null, "0.75"),
+                            React.createElement("td", null, "0.75"),
+                            React.createElement("td", null),
+                            React.createElement("td", null)),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "B"),
+                            React.createElement("td", null, "1.00"),
+                            React.createElement("td", null, "1.00"),
+                            React.createElement("td", null, "0.75"),
+                            React.createElement("td", null)),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "C"),
+                            React.createElement("td", null, "1.50"),
+                            React.createElement("td", null, "1.25"),
+                            React.createElement("td", null, "1.00"),
+                            React.createElement("td", null)),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "D"),
+                            React.createElement("td", null, "1.75"),
+                            React.createElement("td", null, "1.50"),
+                            React.createElement("td", null, "1.25"),
+                            React.createElement("td", null))))),
+            React.createElement("div", { className: "din-inputs" },
+                React.createElement("h2", null, "DIN inputs"))));
+    }
+}
+exports.DINApp = DINApp;
 
 
 /***/ }),
@@ -249,14 +158,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-const Game_1 = __webpack_require__(/*! ./Components/Game */ "./Components/Game.tsx");
+const DINApp_1 = __webpack_require__(/*! ./Components/DINApp */ "./Components/DINApp.tsx");
 /* Todos:
  * - Figure out how to do functional componenet (in order to add typesafe to prop)
  *
  * */
 class App extends React.Component {
     render() {
-        return (React.createElement(Game_1.Game, null));
+        return (React.createElement(DINApp_1.DINApp, null));
     }
 }
 exports.App = App;

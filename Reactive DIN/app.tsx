@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Game } from "./Components/Game";
+import { DINApp } from "./Components/DINApp";
 
 
 
@@ -12,7 +13,7 @@ import { Game } from "./Components/Game";
 export class App extends React.Component {
     render() {
         return (
-            <Game/>
+            <DINApp/>
         );
     }
 }
