@@ -86,6 +86,71 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./Components/BodyMassChart.tsx":
+/*!**************************************!*\
+  !*** ./Components/BodyMassChart.tsx ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BodyMassChart = void 0;
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+class BodyMassChart extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    getIntervals() {
+        return [
+            { weight: { lower: 10, upper: 13 }, height: null },
+            { weight: { lower: 36, upper: 41 }, height: null },
+            { weight: { lower: 42, upper: 48 }, height: { upper: 148 } },
+            { weight: { lower: 49, upper: 57 }, height: { lower: 149, upper: 157 } },
+        ];
+    }
+    intervalToString(i, unit) {
+        if (i == null) {
+            return "";
+        }
+        if (i.lower && i.upper) {
+            return `${i.lower} - ${i.upper} ${unit}`;
+        }
+        else if (i.upper) {
+            return `<= ${i.upper} ${unit}`;
+        }
+        else if (i.lower) {
+            return `>= ${i.lower} ${unit}`;
+        }
+        else {
+            console.error("Empty interval, stacktrace:");
+            console.trace();
+            return "ERROR";
+        }
+    }
+    renderTableBody() {
+        return this.getIntervals().map((interval) => {
+            const { height, weight } = interval;
+            return (React.createElement("tr", null,
+                React.createElement("td", null, this.intervalToString(weight, "kg")),
+                React.createElement("td", null, this.intervalToString(height, "cm"))));
+        });
+    }
+    render() {
+        return (React.createElement("table", null,
+            React.createElement("thead", null,
+                React.createElement("tr", null,
+                    React.createElement("th", null, "Weight (kg)"),
+                    React.createElement("th", null, "Height (cm)"))),
+            React.createElement("tbody", null, this.renderTableBody())));
+    }
+}
+exports.BodyMassChart = BodyMassChart;
+
+
+/***/ }),
+
 /***/ "./Components/DINApp.tsx":
 /*!*******************************!*\
   !*** ./Components/DINApp.tsx ***!
@@ -98,11 +163,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DINApp = void 0;
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const BodyMassChart_1 = __webpack_require__(/*! ./BodyMassChart */ "./Components/BodyMassChart.tsx");
 class DINApp extends React.Component {
     render() {
         return (React.createElement("div", { className: "main" },
             React.createElement("div", { className: "din-table" },
                 React.createElement("h2", null, "DIN table"),
+                React.createElement(BodyMassChart_1.BodyMassChart, null),
                 React.createElement("table", null,
                     React.createElement("thead", null,
                         React.createElement("tr", null,
@@ -164,7 +231,7 @@ class DINApp extends React.Component {
                 React.createElement("button", null, "Calculate"),
                 React.createElement("label", null,
                     "DIN:",
-                    React.createElement("input", { type: "text" })))));
+                    React.createElement("input", { type: "text", disabled: true })))));
     }
 }
 exports.DINApp = DINApp;

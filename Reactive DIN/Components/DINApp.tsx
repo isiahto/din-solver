@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { BodyMassChart } from './BodyMassChart';
 
 
 export class DINApp extends React.Component {
@@ -10,6 +10,7 @@ export class DINApp extends React.Component {
             <div className="main">
                 <div className="din-table">
                     <h2>DIN table</h2>
+                    <BodyMassChart />
                     <table>
                         { /* hard code for now */ }
                         <thead>

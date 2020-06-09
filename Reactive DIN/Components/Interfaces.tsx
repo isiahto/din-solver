@@ -16,5 +16,16 @@ export interface States {
 }
 
 export interface BoardInputs {
-    squares: string[]
+    squares: string[],
 }
+
+export interface Interval {
+    lower: number,
+    upper: number,
+}
+
+export interface BodyMassInterval {
+    height: Interval,
+    weight: Interval
+}
+
