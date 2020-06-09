@@ -102,14 +102,6 @@ class BodyMassChart extends React.Component {
     constructor(props) {
         super(props);
     }
-    getIntervals() {
-        return [
-            { weight: { lower: 10, upper: 13 }, height: null },
-            { weight: { lower: 36, upper: 41 }, height: null },
-            { weight: { lower: 42, upper: 48 }, height: { upper: 148 } },
-            { weight: { lower: 49, upper: 57 }, height: { lower: 149, upper: 157 } },
-        ];
-    }
     intervalToString(i, unit) {
         if (i == null) {
             return "";
@@ -130,7 +122,7 @@ class BodyMassChart extends React.Component {
         }
     }
     renderTableBody() {
-        return this.getIntervals().map((interval) => {
+        return this.props.intervals.map((interval) => {
             const { height, weight } = interval;
             return (React.createElement("tr", null,
                 React.createElement("td", null, this.intervalToString(weight, "kg")),
@@ -165,11 +157,28 @@ exports.DINApp = void 0;
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const BodyMassChart_1 = __webpack_require__(/*! ./BodyMassChart */ "./Components/BodyMassChart.tsx");
 class DINApp extends React.Component {
+    getIntervals() {
+        return [
+            { weight: { lower: 10, upper: 13 }, height: null },
+            { weight: { lower: 14, upper: 17 }, height: null },
+            { weight: { lower: 18, upper: 21 }, height: null },
+            { weight: { lower: 22, upper: 25 }, height: null },
+            { weight: { lower: 26, upper: 30 }, height: null },
+            { weight: { lower: 31, upper: 35 }, height: null },
+            { weight: { lower: 36, upper: 41 }, height: null },
+            { weight: { lower: 42, upper: 48 }, height: { lower: null, upper: 148 } },
+            { weight: { lower: 49, upper: 57 }, height: { lower: 149, upper: 157 } },
+            { weight: { lower: 58, upper: 66 }, height: { lower: 158, upper: 166 } },
+            { weight: { lower: 67, upper: 78 }, height: { lower: 167, upper: 178 } },
+            { weight: { lower: 79, upper: 94 }, height: { lower: 179, upper: 194 } },
+            { weight: { lower: 95, upper: null }, height: { lower: 195, upper: null } },
+        ];
+    }
     render() {
         return (React.createElement("div", { className: "main" },
             React.createElement("div", { className: "din-table" },
                 React.createElement("h2", null, "DIN table"),
-                React.createElement(BodyMassChart_1.BodyMassChart, null),
+                React.createElement(BodyMassChart_1.BodyMassChart, { intervals: this.getIntervals() }),
                 React.createElement("table", null,
                     React.createElement("thead", null,
                         React.createElement("tr", null,

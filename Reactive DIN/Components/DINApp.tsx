@@ -1,16 +1,34 @@
-import * as React from 'react';
-import { BodyMassChart } from './BodyMassChart';
+import * as React from "react";
+import { BodyMassChart } from "./BodyMassChart";
+import { BodyMassInterval } from "./Interfaces"
 
 
 export class DINApp extends React.Component {
 
+    getIntervals(): BodyMassInterval[] {
+        return [
+            { weight: { lower: 10, upper: 13 }, height: null },
+            { weight: { lower: 14, upper: 17 }, height: null },
+            { weight: { lower: 18, upper: 21 }, height: null },
+            { weight: { lower: 22, upper: 25 }, height: null },
+            { weight: { lower: 26, upper: 30 }, height: null },
+            { weight: { lower: 31, upper: 35 }, height: null },
+            { weight: { lower: 36, upper: 41 }, height: null },
+            { weight: { lower: 42, upper: 48 }, height: { lower: null, upper: 148} },
+            { weight: { lower: 49, upper: 57 }, height: { lower: 149, upper: 157 } },
+            { weight: { lower: 58, upper: 66 }, height: { lower: 158, upper: 166 } },
+            { weight: { lower: 67, upper: 78 }, height: { lower: 167, upper: 178 } },
+            { weight: { lower: 79, upper: 94 }, height: { lower: 179, upper: 194 } },
+            { weight: { lower: 95, upper: null }, height: { lower: 195, upper: null} },
+        ]
+    }
 
     render() {
         return (
             <div className="main">
                 <div className="din-table">
                     <h2>DIN table</h2>
-                    <BodyMassChart />
+                    <BodyMassChart intervals={this.getIntervals()}/>
                     <table>
                         { /* hard code for now */ }
                         <thead>

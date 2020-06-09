@@ -1,18 +1,9 @@
 import * as React from 'react';
-import { BodyMassInterval, Interval } from './Interfaces'
+import { BodyMassProps, BodyMassInterval, Interval } from './Interfaces'
 
-export class BodyMassChart extends React.Component {
+export class BodyMassChart extends React.Component<BodyMassProps> {
     constructor(props) {
         super(props);
-    }
-
-    getIntervals(): BodyMassInterval[] {
-        return [
-            { weight: { lower: 10, upper: 13 }, height: null },
-            { weight: { lower: 36, upper: 41 }, height: null },
-            { weight: { lower: 42, upper: 48 }, height: { upper: 148 } as Interval },
-            { weight: { lower: 49, upper: 57 }, height: { lower: 149, upper: 157} },
-        ]
     }
 
     intervalToString(i: Interval, unit: string): string {
@@ -36,7 +27,7 @@ export class BodyMassChart extends React.Component {
     }
 
     renderTableBody() {
-        return this.getIntervals().map((interval) => {
+        return this.props.intervals.map((interval) => {
             const { height, weight } = interval;
             return (
                 <tr>

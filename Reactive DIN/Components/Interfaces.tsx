@@ -24,8 +24,11 @@ export interface Interval {
     upper: number,
 }
 
+export interface BodyMassProps {
+    intervals: BodyMassInterval[]
+}
+
 export interface BodyMassInterval {
     height: Interval,
     weight: Interval
 }
-
