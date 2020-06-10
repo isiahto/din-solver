@@ -1,9 +1,9 @@
 import * as React from "react";
 import { BodyMassChart } from "./BodyMassChart";
-import { BodyMassInterval } from "./Interfaces"
+import { BodyMassInterval, DINState } from "./Interfaces"
 
 
-export class DINApp extends React.Component {
+export class DINApp extends React.Component<{}, DINState> {
     // placeholder
     private weight: React.RefObject<HTMLInputElement>;
     private height: React.RefObject<HTMLInputElement>;
@@ -12,6 +12,14 @@ export class DINApp extends React.Component {
         super(null);
         this.weight = React.createRef();
         this.height = React.createRef();
+
+        //  init states
+        this.state = {
+            selectedRow: -1,
+            selectedWeight: -1,
+            selectedHeight: -1,    
+        } as DINState;
+        
     }
 
     getIntervals(): BodyMassInterval[] {
@@ -36,6 +44,9 @@ export class DINApp extends React.Component {
         console.log("button clicked");
         console.log("Weight:", this.weight.current.value);
         console.log("Height:", this.height.current.value);
+
+        this.setState({ selectedWeight: parseInt(this.weight.current.value) });
+        this.setState({ selectedRow: parseInt(this.height.current.value) });
     }
 
     render() {
@@ -43,7 +54,11 @@ export class DINApp extends React.Component {
             <div className="main">
                 <div className="din-table">
                     <h2>DIN table</h2>
-                    <BodyMassChart intervals={this.getIntervals()}/>
+                    <BodyMassChart intervals={this.getIntervals()}
+                        selectedHeight={this.state.selectedHeight}
+                        selectedWeight={this.state.selectedWeight}
+                        selectedRow={this.state.selectedRow} />
+
                     <table>
                         { /* hard code for now */ }
                         <thead>
@@ -90,12 +105,12 @@ export class DINApp extends React.Component {
                 <div className="din-inputs">
                     <h2>DIN inputs</h2>
                     <div className="textbox-group">
-                        <label>Height</label>
-                        <input type="text" ref={ this.height }/>
-                    </div>
-                    <div className="textbox-group">
                         <label>Weight</label>
                         <input type="text" ref={ this.weight } />
+                    </div>
+                    <div className="textbox-group">
+                        <label>Height</label>
+                        <input type="text" ref={ this.height }/>
                     </div>
                     <button onClick={() => this.onButtonClicked()}>Calculate</button>
 
