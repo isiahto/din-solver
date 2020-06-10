@@ -6,6 +6,12 @@ export class BodyMassChart extends React.Component<BodyMassProps> {
         super(props);
     }
 
+    state = {
+        selectedWeight: -1,
+        selectedHeight: -1,
+        selectedRow: -1,
+    }
+
     intervalToString(i: Interval, unit: string): string {
         if (i == null) {
             return "";
@@ -27,12 +33,12 @@ export class BodyMassChart extends React.Component<BodyMassProps> {
     }
 
     renderTableBody() {
-        return this.props.intervals.map((interval) => {
-            const { height, weight } = interval;
+        return this.props.intervals.map((interval, index) => {
+            const { weight, height } = interval;
             return (
-                <tr>
-                    <td>{this.intervalToString(weight, "kg")}</td>
-                    <td>{this.intervalToString(height, "cm")}</td>
+                <tr className={ this.state.selectedRow == index ? "selected-row" : "" }>
+                    <td className={this.state.selectedWeight == index ? "selected-cell" : ""}>{this.intervalToString(weight, "kg")}</td>
+                    <td className={this.state.selectedHeight == index ? "selected-cell" : ""}>{this.intervalToString(height, "cm")}</td>
                 </tr>
             );
         });

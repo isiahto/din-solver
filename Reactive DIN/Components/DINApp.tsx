@@ -4,6 +4,15 @@ import { BodyMassInterval } from "./Interfaces"
 
 
 export class DINApp extends React.Component {
+    // placeholder
+    private weight: React.RefObject<HTMLInputElement>;
+    private height: React.RefObject<HTMLInputElement>;
+
+    constructor() {
+        super(null);
+        this.weight = React.createRef();
+        this.height = React.createRef();
+    }
 
     getIntervals(): BodyMassInterval[] {
         return [
@@ -21,6 +30,12 @@ export class DINApp extends React.Component {
             { weight: { lower: 79, upper: 94 }, height: { lower: 179, upper: 194 } },
             { weight: { lower: 95, upper: null }, height: { lower: 195, upper: null} },
         ]
+    }
+
+    onButtonClicked() {
+        console.log("button clicked");
+        console.log("Weight:", this.weight.current.value);
+        console.log("Height:", this.height.current.value);
     }
 
     render() {
@@ -74,6 +89,16 @@ export class DINApp extends React.Component {
                 </div>
                 <div className="din-inputs">
                     <h2>DIN inputs</h2>
+                    <div className="textbox-group">
+                        <label>Height</label>
+                        <input type="text" ref={ this.height }/>
+                    </div>
+                    <div className="textbox-group">
+                        <label>Weight</label>
+                        <input type="text" ref={ this.weight } />
+                    </div>
+                    <button onClick={() => this.onButtonClicked()}>Calculate</button>
+
 
                     <div className="radio-group">
                         <p>Experience Level</p>
@@ -94,19 +119,12 @@ export class DINApp extends React.Component {
                         <label>Age</label>
                         <input type="number" />
                     </div>
-                    <div className="textbox-group">
-                        <label>Height</label>
-                        <input type="text"/>
-                    </div>
-                    <div className="textbox-group">
-                        <label>Weight</label>
-                        <input type="text" />
-                    </div>
+
                     <div className="textbox-group">
                         <label>Shoe Size</label>
                         <input type="text" />
                     </div>
-                    <button>Calculate</button>
+                    
                     <label>
                         DIN:
                         <input type="text" disabled/>
