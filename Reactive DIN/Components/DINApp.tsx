@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BodyMassChart } from "./BodyMassChart";
-import { BodyMassInterval, DINState } from "./Interfaces"
+import { BodyMassInterval, DINState, Interval } from "./Interfaces"
 
 
 export class DINApp extends React.Component<{}, DINState> {
@@ -40,13 +40,44 @@ export class DINApp extends React.Component<{}, DINState> {
         ]
     }
 
+
+    withinInterval(n: number, i: Interval): boolean {
+        // cannot check for true with & because there are cases when upper/lower is null
+        if (!i || n < i.lower || n > i.upper) return false;
+        return true;
+    }
+
+    getWeightIndex(w) {
+        var data = this.getIntervals();
+        for (let i = 0; i < data.length; i++) {
+            if (this.withinInterval(w, data[i].weight)) {
+                return i;
+            }
+        }
+        console.error("No match for weight: ", w);
+        return -1;
+    }
+    getHeightIndex(w) {
+        var data = this.getIntervals();
+        for (let i = 0; i < data.length; i++) {
+            if (this.withinInterval(w, data[i].height)) {
+                return i;
+            }
+        }
+        console.error("No match for height: ", w);
+        return -1;
+    }
+
     onButtonClicked() {
         console.log("button clicked");
         console.log("Weight:", this.weight.current.value);
         console.log("Height:", this.height.current.value);
 
-        this.setState({ selectedWeight: parseInt(this.weight.current.value) });
-        this.setState({ selectedRow: parseInt(this.height.current.value) });
+        var sw = this.getWeightIndex(parseInt(this.weight.current.value));
+        var sh = this.getHeightIndex(parseInt(this.height.current.value));
+
+        this.setState({ selectedWeight: sw});
+        this.setState({ selectedHeight: sh});
     }
 
     render() {
