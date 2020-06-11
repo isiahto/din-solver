@@ -123,59 +123,19 @@ export class DINApp extends React.Component<{}, DINState> {
             <div className="main">
                 <div className="din-table">
                     <h2>DIN table</h2>
-                    <BodyMassChart intervals={this.getIntervals()}
-                        selectedHeight={this.state.selectedHeight}
-                        selectedWeight={this.state.selectedWeight}
-                        selectedRow={this.state.selectedRow} />
-
-                    <DINChart
-                        selectedCode={this.state.selectedRow}
-                        selectedShoeSize={this.state.selectedShoeSize}
-                        DINCodes={this.getDINLookup()}
-                        shoeSizes={this.getShoeSizes()} />
-
-                    <table>
-                        { /* hard code for now */ }
-                        <thead>
-                            <tr>
-                                <th>Skier Code</th>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3</th>
-                                <th>4</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>A</td>
-                                <td>0.75</td>
-                                <td>0.75</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>B</td>
-                                <td>1.00</td>
-                                <td>1.00</td>
-                                <td>0.75</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>C</td>
-                                <td>1.50</td>
-                                <td>1.25</td>
-                                <td>1.00</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>D</td>
-                                <td>1.75</td>
-                                <td>1.50</td>
-                                <td>1.25</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div className="table-container">
+                        <BodyMassChart intervals={this.getIntervals()}
+                            selectedHeight={this.state.selectedHeight}
+                            selectedWeight={this.state.selectedWeight}
+                            selectedRow={this.state.selectedRow} />
+                    </div>
+                    <div className="table-container" style={{ position: "relative", left: "-1px"}}>
+                        <DINChart
+                            selectedCode={this.state.selectedRow}
+                            selectedShoeSize={this.state.selectedShoeSize}
+                            DINCodes={this.getDINLookup()}
+                            shoeSizes={this.getShoeSizes()} />
+                    </div>
                 </div>
                 <div className="din-inputs">
                     <h2>DIN inputs</h2>

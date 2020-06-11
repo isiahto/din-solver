@@ -24,7 +24,7 @@ export class DINChart extends React.Component<DINProps> {
                     {
                         DINRow.values.map((din, index) => {
                             return (
-                                <td>{din?.toFixed(2)}</td>
+                                <td className={din == null ? "no-border" : ""}>{din?.toFixed(2)}</td>
                             );
                         })
                     }
