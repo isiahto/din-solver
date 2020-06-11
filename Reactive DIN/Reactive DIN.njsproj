@@ -57,8 +57,14 @@
     <TypeScriptCompile Include="Components\DINApp.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Components\DINChart.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Components\Game.tsx" />
     <TypeScriptCompile Include="Components\Board.tsx" />
+    <TypeScriptCompile Include="Components\Helper.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Components\InputGroup.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

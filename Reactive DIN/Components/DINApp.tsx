@@ -44,12 +44,14 @@ export class DINApp extends React.Component<{}, DINState> {
 
     getShoeSizes(): ShoeSizeInterval {
         let intervals = [
-            { lower: null, upper: 250 },
+            { lower: null, upper: 230 },
+            { lower: 231, upper: 250 },
             { lower: 251, upper: 270 },
             { lower: 271, upper: 290 },
             { lower: 291, upper: 310 },
             { lower: 311, upper: 330 },
-            { lower: 331, upper: null },
+            { lower: 331, upper: 350 },
+            { lower: 351, upper: null }
         ];
         return { intervals };
     }
@@ -130,8 +132,7 @@ export class DINApp extends React.Component<{}, DINState> {
                         selectedCode={this.state.selectedRow}
                         selectedShoeSize={this.state.selectedShoeSize}
                         DINCodes={this.getDINLookup()}
-                        shoeSizes={this.getShoeSizes()}
-                    />
+                        shoeSizes={this.getShoeSizes()} />
 
                     <table>
                         { /* hard code for now */ }
