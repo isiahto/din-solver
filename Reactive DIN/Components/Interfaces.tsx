@@ -20,9 +20,11 @@ export interface BoardInputs {
 }
 
 export interface DINState {
+    selectedRow: number,
     selectedWeight: number,
     selectedHeight: number,
-    selectedRow: number,
+    selectedCode: number,
+    selectedShoeSize: number,
 }
 
 export interface Interval {
@@ -40,4 +42,20 @@ export interface BodyMassProps {
 export interface BodyMassInterval {
     weight: Interval,
     height: Interval,
+}
+
+export interface DINProps {
+    selectedCode: number,
+    selectedShoeSize: number,
+    DINCodes: DINCodes[],
+    shoeSizes: ShoeSizeInterval,
+}
+
+export interface ShoeSizeInterval {
+    intervals: Interval[]
+}
+
+export interface DINCodes {
+    code: string,
+    values: number[]
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BodyMassChart } from "./BodyMassChart";
-import { BodyMassInterval, DINState, Interval } from "./Interfaces"
+import { DINChart } from "./DINChart";
+import { BodyMassInterval, DINState, Interval, ShoeSizeInterval, DINCodes } from "./Interfaces";
 
 
 export class DINApp extends React.Component<{}, DINState> {
@@ -17,9 +18,10 @@ export class DINApp extends React.Component<{}, DINState> {
         this.state = {
             selectedRow: -1,
             selectedWeight: -1,
-            selectedHeight: -1,    
+            selectedHeight: -1,
+            selectedCode: -1,
+            selectedShoeSize: -1,
         } as DINState;
-        
     }
 
     getIntervals(): BodyMassInterval[] {
@@ -40,6 +42,40 @@ export class DINApp extends React.Component<{}, DINState> {
         ]
     }
 
+    getShoeSizes(): ShoeSizeInterval {
+        let intervals = [
+            { lower: null, upper: 250 },
+            { lower: 251, upper: 270 },
+            { lower: 271, upper: 290 },
+            { lower: 291, upper: 310 },
+            { lower: 311, upper: 330 },
+            { lower: 331, upper: null },
+        ];
+        return { intervals };
+    }
+
+    getDINLookup(): DINCodes[] {
+
+        let lookup: DINCodes[] = [
+            { code: "A", values: [0.75, 0.75] },
+            { code: "B", values: [1.0, 0.75, 0.75, 0.75] },
+            { code: "C", values: [1.5, 1.25, 1.25, 1.0] },
+            { code: "D", values: [2.0, 1.75, 1.5, 1.5, 1.25] },
+            { code: "E", values: [2.5, 2.25, 2.0, 1.75, 1.5, 1.5] },
+            { code: "F", values: [3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.75] },
+            { code: "G", values: [null, 3.5, 3.0, 2.75, 2.5, 2.25, 2.0] },
+            { code: "H", values: [null, null, 3.5, 3.0, 3.0, 2.75, 2.5] },
+            { code: "I", values: [null, null, 4.5, 4.0, 3.5, 3.5, 3.0] },
+            { code: "J", values: [null, null, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0] },
+            { code: "K", values: [null, null, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0] },
+            { code: "L", values: [null, null, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0] },
+            { code: "M", values: [null, null, null, 8.5, 8.0, 7.0, 6.5, 6.0] },
+            { code: "N", values: [null, null, null, 10.0, 9.5, 8.5, 8.0, 7.5] },
+            { code: "O", values: [null, null, null, 11.5, 11.0, 10.0, 9.5, 9.0] },
+            { code: "P", values: [null, null, null, null, null, 12.00, 11.0, 10.5] },
+        ]
+        return lookup;
+    }
 
     withinInterval(n: number, i: Interval): boolean {
         // cannot check for true with & because there are cases when upper/lower is null
@@ -89,6 +125,13 @@ export class DINApp extends React.Component<{}, DINState> {
                         selectedHeight={this.state.selectedHeight}
                         selectedWeight={this.state.selectedWeight}
                         selectedRow={this.state.selectedRow} />
+
+                    <DINChart
+                        selectedCode={this.state.selectedRow}
+                        selectedShoeSize={this.state.selectedShoeSize}
+                        DINCodes={this.getDINLookup()}
+                        shoeSizes={this.getShoeSizes()}
+                    />
 
                     <table>
                         { /* hard code for now */ }
