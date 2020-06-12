@@ -56,6 +56,6 @@ export interface ShoeSizeInterval {
 }
 
 export interface DINCodes {
-    code: string,
+    skierCode: string,
     values: number[]
 }

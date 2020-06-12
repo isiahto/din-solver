@@ -59,22 +59,22 @@ export class DINApp extends React.Component<{}, DINState> {
     getDINLookup(): DINCodes[] {
 
         let lookup: DINCodes[] = [
-            { code: "A", values: [0.75, 0.75] },
-            { code: "B", values: [1.0, 0.75, 0.75, 0.75] },
-            { code: "C", values: [1.5, 1.25, 1.25, 1.0] },
-            { code: "D", values: [2.0, 1.75, 1.5, 1.5, 1.25] },
-            { code: "E", values: [2.5, 2.25, 2.0, 1.75, 1.5, 1.5] },
-            { code: "F", values: [3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.75] },
-            { code: "G", values: [null, 3.5, 3.0, 2.75, 2.5, 2.25, 2.0] },
-            { code: "H", values: [null, null, 3.5, 3.0, 3.0, 2.75, 2.5] },
-            { code: "I", values: [null, null, 4.5, 4.0, 3.5, 3.5, 3.0] },
-            { code: "J", values: [null, null, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0] },
-            { code: "K", values: [null, null, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0] },
-            { code: "L", values: [null, null, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0] },
-            { code: "M", values: [null, null, null, 8.5, 8.0, 7.0, 6.5, 6.0] },
-            { code: "N", values: [null, null, null, 10.0, 9.5, 8.5, 8.0, 7.5] },
-            { code: "O", values: [null, null, null, 11.5, 11.0, 10.0, 9.5, 9.0] },
-            { code: "P", values: [null, null, null, null, null, 12.00, 11.0, 10.5] },
+            { skierCode: "A", values: [0.75, 0.75] },
+            { skierCode: "B", values: [1.0, 0.75, 0.75, 0.75] },
+            { skierCode: "C", values: [1.5, 1.25, 1.25, 1.0] },
+            { skierCode: "D", values: [2.0, 1.75, 1.5, 1.5, 1.25] },
+            { skierCode: "E", values: [2.5, 2.25, 2.0, 1.75, 1.5, 1.5] },
+            { skierCode: "F", values: [3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.75] },
+            { skierCode: "G", values: [null, 3.5, 3.0, 2.75, 2.5, 2.25, 2.0] },
+            { skierCode: "H", values: [null, null, 3.5, 3.0, 3.0, 2.75, 2.5] },
+            { skierCode: "I", values: [null, null, 4.5, 4.0, 3.5, 3.5, 3.0] },
+            { skierCode: "J", values: [null, null, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0] },
+            { skierCode: "K", values: [null, null, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0] },
+            { skierCode: "L", values: [null, null, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0] },
+            { skierCode: "M", values: [null, null, null, 8.5, 8.0, 7.0, 6.5, 6.0] },
+            { skierCode: "N", values: [null, null, null, 10.0, 9.5, 8.5, 8.0, 7.5] },
+            { skierCode: "O", values: [null, null, null, 11.5, 11.0, 10.0, 9.5, 9.0] },
+            { skierCode: "P", values: [null, null, null, null, null, 12.00, 11.0, 10.5] },
         ]
         return lookup;
     }
@@ -106,6 +106,7 @@ export class DINApp extends React.Component<{}, DINState> {
         return -1;
     }
 
+    // step 1
     onButtonClicked() {
         console.log("button clicked");
         console.log("Weight:", this.weight.current.value);
@@ -114,8 +115,32 @@ export class DINApp extends React.Component<{}, DINState> {
         var sw = this.getWeightIndex(parseInt(this.weight.current.value));
         var sh = this.getHeightIndex(parseInt(this.height.current.value));
 
-        this.setState({ selectedWeight: sw});
-        this.setState({ selectedHeight: sh});
+        this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
+
+        this.setState({ selectedWeight: sw, selectedHeight: sh});
+    }
+
+    chooseRowWithSmallerValue() {
+        let row = Math.min(this.state.selectedWeight, this.state.selectedWeight);
+
+        // un-highlight
+        this.setState({
+            selectedWeight: row,
+            selectedHeight: row,
+            selectedRow: row
+        });
+    }
+
+    adjustSkierCode() {
+
+    }
+
+    hightlightShoeSizeColumn() {
+
+    }
+
+    onRadioButtonChanged(event) {
+        console.log("Radio button changed, value: ", event.target.value);
     }
 
     render() {
@@ -147,22 +172,24 @@ export class DINApp extends React.Component<{}, DINState> {
                         <label>Height</label>
                         <input type="text" ref={ this.height }/>
                     </div>
-                    <button onClick={() => this.onButtonClicked()}>Calculate</button>
-
+                    <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
+                    <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
+                    <button onClick={() => this.adjustSkierCode()}>2: Adjust skier code by age and skill</button>
+                    <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
 
                     <div className="radio-group">
-                        <p>Experience Level</p>
+                        <p>Skier Level</p>
                         <label>
                             Level 1
-                            <input type="radio" name="level" />
+                            <input type="radio" name="skiier_level" value="0" onChange={ this.onRadioButtonChanged } />
                         </label>
                         <label>
                             Level 2
-                            <input type="radio" name="level" />
+                            <input type="radio" name="skiier_level" value="1" onChange={this.onRadioButtonChanged} />
                         </label>
                         <label>
                             Level 3
-                            <input type="radio" name="level" />
+                            <input type="radio" name="skiier_level" value="2" onChange={this.onRadioButtonChanged} />
                         </label>
                     </div>
                     <div className="textbox-group">

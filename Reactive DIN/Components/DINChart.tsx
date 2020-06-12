@@ -20,7 +20,7 @@ export class DINChart extends React.Component<DINProps> {
         return this.props.DINCodes.map((DINRow, index) => {
             return (
                 <tr>
-                    <td>{DINRow.code}</td>
+                    <td className={ this.props.selectedCode == index ? "selected-cell" : "" }>{DINRow.skierCode}</td>
                     {
                         DINRow.values.map((din, index) => {
                             return (
