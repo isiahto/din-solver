@@ -25,6 +25,7 @@ export interface DINState {
     selectedHeight: number,
     selectedCode: number,
     selectedShoeSize: number,
+    selectedSkierLevel: number,
 }
 
 export interface Interval {

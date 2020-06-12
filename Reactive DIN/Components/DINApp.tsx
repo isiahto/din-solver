@@ -8,11 +8,13 @@ export class DINApp extends React.Component<{}, DINState> {
     // placeholder
     private weight: React.RefObject<HTMLInputElement>;
     private height: React.RefObject<HTMLInputElement>;
+    private age: React.RefObject<HTMLInputElement>;
 
     constructor() {
         super(null);
         this.weight = React.createRef();
         this.height = React.createRef();
+        this.age = React.createRef();
 
         //  init states
         this.state = {
@@ -21,7 +23,10 @@ export class DINApp extends React.Component<{}, DINState> {
             selectedHeight: -1,
             selectedCode: -1,
             selectedShoeSize: -1,
+            selectedSkierLevel: -1,
         } as DINState;
+
+        this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
     }
 
     getIntervals(): BodyMassInterval[] {
@@ -108,15 +113,8 @@ export class DINApp extends React.Component<{}, DINState> {
 
     // step 1
     onButtonClicked() {
-        console.log("button clicked");
-        console.log("Weight:", this.weight.current.value);
-        console.log("Height:", this.height.current.value);
-
         var sw = this.getWeightIndex(parseInt(this.weight.current.value));
         var sh = this.getHeightIndex(parseInt(this.height.current.value));
-
-        this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
-
         this.setState({ selectedWeight: sw, selectedHeight: sh});
     }
 
@@ -132,7 +130,23 @@ export class DINApp extends React.Component<{}, DINState> {
     }
 
     adjustSkierCode() {
+        let adjustment = this.state.selectedSkierLevel;
+        let skier_age = parseInt(this.age.current.value);
+        adjustment += this.getAdjustmentByAge(skier_age);
 
+
+        this.setState({
+            selectedHeight: -1,
+            selectedWeight: -1,
+            selectedRow: this.state.selectedRow + adjustment
+        });
+    }
+
+    getAdjustmentByAge(age: number): number {
+        if (age < 10 || age >= 50) {
+            return -1;
+        }
+        return 0;
     }
 
     hightlightShoeSizeColumn() {
@@ -140,7 +154,9 @@ export class DINApp extends React.Component<{}, DINState> {
     }
 
     onRadioButtonChanged(event) {
-        console.log("Radio button changed, value: ", event.target.value);
+        this.setState({
+            selectedSkierLevel: parseInt(event.target.value)
+        })
     }
 
     render() {
@@ -166,11 +182,11 @@ export class DINApp extends React.Component<{}, DINState> {
                     <h2>DIN inputs</h2>
                     <div className="textbox-group">
                         <label>Weight</label>
-                        <input type="text" ref={ this.weight } />
+                        <input type="text" ref={this.weight} />
                     </div>
                     <div className="textbox-group">
                         <label>Height</label>
-                        <input type="text" ref={ this.height }/>
+                        <input type="text" ref={this.height}/>
                     </div>
                     <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
                     <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
@@ -180,21 +196,21 @@ export class DINApp extends React.Component<{}, DINState> {
                     <div className="radio-group">
                         <p>Skier Level</p>
                         <label>
+                            <input type="radio" name="skier_level" value="0" checked={this.state.selectedSkierLevel == 0} onChange={this.onRadioButtonChanged} />
                             Level 1
-                            <input type="radio" name="skiier_level" value="0" onChange={ this.onRadioButtonChanged } />
                         </label>
                         <label>
+                            <input type="radio" name="skier_level" value="1" checked={this.state.selectedSkierLevel == 1} onChange={this.onRadioButtonChanged} />
                             Level 2
-                            <input type="radio" name="skiier_level" value="1" onChange={this.onRadioButtonChanged} />
                         </label>
                         <label>
+                            <input type="radio" name="skier_level" value="2" checked={this.state.selectedSkierLevel == 2} onChange={this.onRadioButtonChanged} />
                             Level 3
-                            <input type="radio" name="skiier_level" value="2" onChange={this.onRadioButtonChanged} />
                         </label>
                     </div>
                     <div className="textbox-group">
                         <label>Age</label>
-                        <input type="number" />
+                        <input type="number" ref={this.age}/>
                     </div>
 
                     <div className="textbox-group">
