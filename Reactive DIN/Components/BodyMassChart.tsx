@@ -13,7 +13,7 @@ export class BodyMassChart extends React.Component<BodyMassProps> {
             return (
                 <tr className={ this.props.selectedRow == index ? "selected-row" : "" }>
                     <td className={this.props.selectedWeight == index ? "selected-cell" : ""}>{Helper.intervalToString(weight, "kg")}</td>
-                    <td className={this.props.selectedHeight == index ? "selected-cell" : ""}>{Helper.intervalToString(height, "cm")}</td>
+                    <td className={height == null ? "no-border" : this.props.selectedHeight == index ? "selected-cell" : ""}>{Helper.intervalToString(height, "cm")}</td>
                 </tr>
             );
         });
