@@ -33,9 +33,19 @@ export class DINChart extends React.Component<DINProps> {
         });
     }
 
+    renderColGroups() {
+        return this.props.shoeSizes.intervals.map((interval, index) => {
+            return (<col className={ this.props.selectedShoeSize == index ? "selected-col" : "" }/>)
+        });
+    }
+
     render() {
         return (
             <table>
+                <colgroup>
+                    <col/>
+                    { this.renderColGroups() }
+                </colgroup>
                 <thead>
                     <tr>
                         <th>Skier Code</th>

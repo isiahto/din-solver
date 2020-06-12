@@ -9,12 +9,14 @@ export class DINApp extends React.Component<{}, DINState> {
     private weight: React.RefObject<HTMLInputElement>;
     private height: React.RefObject<HTMLInputElement>;
     private age: React.RefObject<HTMLInputElement>;
+    private shoesize: React.RefObject<HTMLInputElement>;
 
     constructor() {
         super(null);
         this.weight = React.createRef();
         this.height = React.createRef();
         this.age = React.createRef();
+        this.shoesize = React.createRef();
 
         //  init states
         this.state = {
@@ -29,6 +31,7 @@ export class DINApp extends React.Component<{}, DINState> {
         this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
     }
 
+    /* data generating functions */
     getIntervals(): BodyMassInterval[] {
         return [
             { weight: { lower: 10, upper: 13 }, height: null },
@@ -46,7 +49,6 @@ export class DINApp extends React.Component<{}, DINState> {
             { weight: { lower: 95, upper: null }, height: { lower: 195, upper: null} },
         ]
     }
-
     getShoeSizes(): ShoeSizeInterval {
         let intervals = [
             { lower: null, upper: 230 },
@@ -60,7 +62,6 @@ export class DINApp extends React.Component<{}, DINState> {
         ];
         return { intervals };
     }
-
     getDINLookup(): DINCodes[] {
 
         let lookup: DINCodes[] = [
@@ -83,6 +84,7 @@ export class DINApp extends React.Component<{}, DINState> {
         ]
         return lookup;
     }
+    /* data generating functions */
 
     withinInterval(n: number, i: Interval): boolean {
         // cannot check for true with & because there are cases when upper/lower is null
@@ -110,6 +112,16 @@ export class DINApp extends React.Component<{}, DINState> {
         console.error("No match for height: ", w);
         return -1;
     }
+    getShoeSizeIndex(size) {
+        var data = this.getShoeSizes().intervals;
+        for (let i = 0; i < data.length; i++) {
+            if (this.withinInterval(size, data[i])) {
+                return i;
+            }
+        }
+        console.error("No match for shoe size: ", size);
+        return -1;
+    }
 
     // step 1
     onButtonClicked() {
@@ -118,6 +130,7 @@ export class DINApp extends React.Component<{}, DINState> {
         this.setState({ selectedWeight: sw, selectedHeight: sh});
     }
 
+    // step 1b
     chooseRowWithSmallerValue() {
         let row = Math.min(this.state.selectedWeight, this.state.selectedWeight);
 
@@ -129,6 +142,7 @@ export class DINApp extends React.Component<{}, DINState> {
         });
     }
 
+    // step 2
     adjustSkierCode() {
         let adjustment = this.state.selectedSkierLevel;
         let skier_age = parseInt(this.age.current.value);
@@ -149,8 +163,13 @@ export class DINApp extends React.Component<{}, DINState> {
         return 0;
     }
 
+    // step 3
     hightlightShoeSizeColumn() {
+        let shoesizeColIdx = this.getShoeSizeIndex(parseInt(this.shoesize.current.value));
 
+        this.setState({
+            selectedShoeSize: shoesizeColIdx + 1 // offset skier code column
+        });
     }
 
     onRadioButtonChanged(event) {
@@ -188,11 +207,6 @@ export class DINApp extends React.Component<{}, DINState> {
                         <label>Height</label>
                         <input type="text" ref={this.height}/>
                     </div>
-                    <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
-                    <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
-                    <button onClick={() => this.adjustSkierCode()}>2: Adjust skier code by age and skill</button>
-                    <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
-
                     <div className="radio-group">
                         <p>Skier Level</p>
                         <label>
@@ -212,12 +226,20 @@ export class DINApp extends React.Component<{}, DINState> {
                         <label>Age</label>
                         <input type="number" ref={this.age}/>
                     </div>
-
                     <div className="textbox-group">
                         <label>Shoe Size</label>
-                        <input type="text" />
+                        <input type="text" ref={this.shoesize}/>
                     </div>
-                    
+
+                    <br/>
+                    <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
+                    <br />
+                    <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
+                    <br />
+                    <button onClick={() => this.adjustSkierCode()}>2: Adjust skier code by age and skill</button>
+                    <br />
+                    <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
+                    <br />
                     <label>
                         DIN:
                         <input type="text" disabled/>
