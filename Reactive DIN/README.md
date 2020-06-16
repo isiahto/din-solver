@@ -23,6 +23,13 @@ After the input has been filled in, on `Calculate` clicked:
 	- Display: "Highlight the closest DIN cell on the row"
 	- Caption: "If no value landed on the intersection, choose the closest DIN value on the same row"
 
+### Todo:
+- Handle off bounds:
+	- skier code adjustment
+	- shoesize on empty column
+- Add disclaimer, table reference
+- Add license?
+
 
 ### DIN Charts References:
 - Salomon 16/17 Maunal [Page 51](http://salomontechnician.com/uploads/Salomon_technical_manual_alpine_16_17.pdf)

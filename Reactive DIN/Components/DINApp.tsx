@@ -34,6 +34,24 @@ export class DINApp extends React.Component<{}, DINState> {
         this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
     }
 
+    reset() {
+        this.setState({
+            selectedRow: -1,
+            selectedWeight: -1,
+            selectedHeight: -1,
+            selectedCode: -1,
+            selectedShoeSize: -1,
+            selectedSkierLevel: -1,
+            showTargetDIN: false,
+            targetDIN: 0
+        });
+
+        this.weight.current.value = "";
+        this.height.current.value = "";
+        this.age.current.value = "";
+        this.shoesize.current.value = "";
+    }
+
     /* data generating functions */
     getIntervals(): BodyMassInterval[] {
         return [
@@ -285,6 +303,8 @@ export class DINApp extends React.Component<{}, DINState> {
                     <button onClick={() => this.showIntersectedCell()}>4: Show Intersection </button>
                     <br />
                     <button onClick={() => this.displayResult()}>5: Display Result</button>
+                    <br />
+                    <button onClick={() => this.reset()}>Reset</button>
                     <label>
                         DIN:
                         <input type="text" disabled value={this.state.targetDIN}/>
