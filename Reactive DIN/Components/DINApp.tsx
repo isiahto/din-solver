@@ -65,15 +65,15 @@ export class DINApp extends React.Component<{}, DINState> {
     getDINLookup(): DINCodes[] {
 
         let lookup: DINCodes[] = [
-            { skierCode: "A", values: [0.75, 0.75] },
-            { skierCode: "B", values: [1.0, 0.75, 0.75, 0.75] },
-            { skierCode: "C", values: [1.5, 1.25, 1.25, 1.0] },
-            { skierCode: "D", values: [2.0, 1.75, 1.5, 1.5, 1.25] },
-            { skierCode: "E", values: [2.5, 2.25, 2.0, 1.75, 1.5, 1.5] },
-            { skierCode: "F", values: [3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.75] },
-            { skierCode: "G", values: [null, 3.5, 3.0, 2.75, 2.5, 2.25, 2.0] },
-            { skierCode: "H", values: [null, null, 3.5, 3.0, 3.0, 2.75, 2.5] },
-            { skierCode: "I", values: [null, null, 4.5, 4.0, 3.5, 3.5, 3.0] },
+            { skierCode: "A", values: [0.75, 0.75, null, null, null, null, null, null] },
+            { skierCode: "B", values: [1.0, 0.75, 0.75, 0.75, null, null, null, null] },
+            { skierCode: "C", values: [1.5, 1.25, 1.25, 1.0, null, null, null, null] },
+            { skierCode: "D", values: [2.0, 1.75, 1.5, 1.5, 1.25, null, null, null] },
+            { skierCode: "E", values: [2.5, 2.25, 2.0, 1.75, 1.5, 1.5, null, null] },
+            { skierCode: "F", values: [3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.75, null] },
+            { skierCode: "G", values: [null, 3.5, 3.0, 2.75, 2.5, 2.25, 2.0, null] },
+            { skierCode: "H", values: [null, null, 3.5, 3.0, 3.0, 2.75, 2.5, null] },
+            { skierCode: "I", values: [null, null, 4.5, 4.0, 3.5, 3.5, 3.0, null] },
             { skierCode: "J", values: [null, null, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0] },
             { skierCode: "K", values: [null, null, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0] },
             { skierCode: "L", values: [null, null, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0] },
@@ -172,6 +172,17 @@ export class DINApp extends React.Component<{}, DINState> {
         });
     }
 
+    // step 4
+    showIntersectedCell() {
+
+    }
+    // 4b?
+
+    // step 5
+    displayResult() {
+
+    }
+
     onRadioButtonChanged(event) {
         this.setState({
             selectedSkierLevel: parseInt(event.target.value)
@@ -240,6 +251,9 @@ export class DINApp extends React.Component<{}, DINState> {
                     <br />
                     <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
                     <br />
+                    <button onClick={() => this.showIntersectedCell()}>4: Show Intersection </button>
+                    <br />
+                    <button onClick={() => this.displayResult()}>5: Display Result</button>
                     <label>
                         DIN:
                         <input type="text" disabled/>
