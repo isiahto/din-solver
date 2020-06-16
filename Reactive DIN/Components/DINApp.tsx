@@ -176,7 +176,7 @@ export class DINApp extends React.Component<{}, DINState> {
         let shoesizeColIdx = this.getShoeSizeIndex(parseInt(this.shoesize.current.value));
 
         this.setState({
-            selectedShoeSize: shoesizeColIdx + 1 // offset skier code column
+            selectedShoeSize: shoesizeColIdx // offset skier code column
         });
     }
 
