@@ -16,15 +16,47 @@ export class DINChart extends React.Component<DINProps> {
         });
     }
 
+    isSelectedCol(colIndex: number) {
+        return colIndex == this.props.selectedShoeSize;
+    }
+
+    isSelectedRow(rowIndex: number) {
+        return rowIndex == this.props.selectedCode;
+    }
+
+    getDINCellStyle(din: number, rowIndex: number, colIndex: number): string {
+        /* Rules:
+         *  highlight row => isSelectedRow
+         *  hightlight col => nop (done in col-group)
+         *  target cell => isSelectedRow && isSelectedCol
+         *  no Border => din is null
+         */
+        if (!din) {
+            return "no-border";
+        }
+
+        let styleClasses = [];
+
+        if (this.isSelectedRow(rowIndex)) {
+            styleClasses.push("target-row");
+        }
+
+        if (this.isSelectedRow(rowIndex) && this.isSelectedCol(colIndex)) {
+            styleClasses.push("target-cell");
+        }
+
+        return styleClasses.join(" ");
+    }
+
     renderTableBody() {
-        return this.props.DINCodes.map((DINRow, index) => {
+        return this.props.DINCodes.map((DINRow, rowIndex) => {
             return (
                 <tr>
-                    <td className={ this.props.selectedCode == index ? "selected-cell" : "" }>{DINRow.skierCode}</td>
+                    <td className={ this.isSelectedRow(rowIndex) ? "target-row" : "" }>{DINRow.skierCode}</td>
                     {
-                        DINRow.values.map((din, index) => {
+                        DINRow.values.map((din, colIndex) => {
                             return (
-                                <td className={din == null ? "null-din" : ""}>{din?.toFixed(2)}</td>
+                                <td className={this.getDINCellStyle(din, rowIndex, colIndex)}>{din?.toFixed(2)}</td>
                             );
                         })
                     }
@@ -35,7 +67,7 @@ export class DINChart extends React.Component<DINProps> {
 
     renderColGroups() {
         return this.props.shoeSizes.intervals.map((interval, index) => {
-            return (<col className={ this.props.selectedShoeSize == index ? "selected-col" : "" }/>)
+            return (<col className={ this.props.selectedShoeSize == index ? "target-col" : "" }/>)
         });
     }
 

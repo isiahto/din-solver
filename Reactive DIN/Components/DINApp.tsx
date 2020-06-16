@@ -87,9 +87,14 @@ export class DINApp extends React.Component<{}, DINState> {
     /* data generating functions */
 
     withinInterval(n: number, i: Interval): boolean {
-        // cannot check for true with & because there are cases when upper/lower is null
-        if (!i || n < i.lower || n > i.upper) return false;
-        return true;
+
+        return (
+            (i != null) && (
+            (n >= i.lower && n <= i.upper)    || // ordinary case
+            (i.lower == null && n <= i.upper) || // min bound
+            (i.upper == null && n >= i.lower))    // max bound
+        ); 
+        
     }
 
     getWeightIndex(w) {
@@ -132,7 +137,7 @@ export class DINApp extends React.Component<{}, DINState> {
 
     // step 1b
     chooseRowWithSmallerValue() {
-        let row = Math.min(this.state.selectedWeight, this.state.selectedWeight);
+        let row = Math.min(this.state.selectedHeight, this.state.selectedWeight);
 
         // un-highlight
         this.setState({
