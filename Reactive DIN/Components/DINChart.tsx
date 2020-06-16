@@ -25,11 +25,11 @@ export class DINChart extends React.Component<DINProps> {
     }
 
     getDINCellStyle(din: number, rowIndex: number, colIndex: number): string {
-        /* Rules:
+        /* Rules: (in order)
+         *  No Border => din is null
+         *  target cell => isSelectedRow && isSelectedCol
          *  highlight row => isSelectedRow
          *  hightlight col => nop (done in col-group)
-         *  target cell => isSelectedRow && isSelectedCol
-         *  no Border => din is null
          */
         if (!din) {
             return "null-din";
@@ -42,8 +42,6 @@ export class DINChart extends React.Component<DINProps> {
         if (this.isSelectedRow(rowIndex)) {
             return "target-row";
         }
-
-        
     }
 
     renderTableBody() {

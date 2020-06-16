@@ -18,6 +18,7 @@ export class DINApp extends React.Component<{}, DINState> {
         this.age = React.createRef();
         this.shoesize = React.createRef();
 
+
         //  init states
         this.state = {
             selectedRow: -1,
@@ -26,6 +27,8 @@ export class DINApp extends React.Component<{}, DINState> {
             selectedCode: -1,
             selectedShoeSize: -1,
             selectedSkierLevel: -1,
+            showTargetDIN: false,
+            targetDIN: 0
         } as DINState;
 
         this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
@@ -186,8 +189,28 @@ export class DINApp extends React.Component<{}, DINState> {
     // 4b?
 
     // step 5
+    // pure logic, no animation
     displayResult() {
+        const weightIndex = this.getWeightIndex(parseInt(this.weight.current.value));
+        const heightIndex = this.getHeightIndex(parseInt(this.height.current.value));
+        const lowestIndex = Math.min(weightIndex, heightIndex);
 
+        const skier_age = parseInt(this.age.current.value);
+        const adjustment = this.getAdjustmentByAge(skier_age) + this.state.selectedSkierLevel;
+
+        const skierCodeIndex = lowestIndex + adjustment;
+        const shoesizeColIdx = this.getShoeSizeIndex(parseInt(this.shoesize.current.value));
+
+        let dinTable = this.getDINLookup();
+        const row = dinTable.find((d, i) => i == skierCodeIndex);
+
+        if (row) {
+            this.setState({
+                targetDIN: row.values[shoesizeColIdx]
+            });
+        } else {
+            console.error("error row is null/undefined");
+        }
     }
 
     onRadioButtonChanged(event) {
@@ -264,7 +287,7 @@ export class DINApp extends React.Component<{}, DINState> {
                     <button onClick={() => this.displayResult()}>5: Display Result</button>
                     <label>
                         DIN:
-                        <input type="text" disabled/>
+                        <input type="text" disabled value={this.state.targetDIN}/>
                     </label>
                 </div>
             </div>
