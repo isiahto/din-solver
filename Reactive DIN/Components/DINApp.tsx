@@ -179,7 +179,9 @@ export class DINApp extends React.Component<{}, DINState> {
 
     // step 4
     showIntersectedCell() {
-
+        this.setState({
+            showTargetDIN: true
+        });
     }
     // 4b?
 
@@ -209,6 +211,7 @@ export class DINApp extends React.Component<{}, DINState> {
                         <DINChart
                             selectedCode={this.state.selectedRow}
                             selectedShoeSize={this.state.selectedShoeSize}
+                            showTargetDIN={this.state.showTargetDIN}
                             DINCodes={this.getDINLookup()}
                             shoeSizes={this.getShoeSizes()} />
                     </div>

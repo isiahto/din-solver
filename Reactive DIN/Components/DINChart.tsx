@@ -32,20 +32,18 @@ export class DINChart extends React.Component<DINProps> {
          *  no Border => din is null
          */
         if (!din) {
-            return "no-border";
+            return "null-din";
         }
 
-        let styleClasses = [];
+        if (this.props.showTargetDIN && this.isSelectedRow(rowIndex) && this.isSelectedCol(colIndex)) {
+            return "target-din";
+        }
 
         if (this.isSelectedRow(rowIndex)) {
-            styleClasses.push("target-row");
+            return "target-row";
         }
 
-        if (this.isSelectedRow(rowIndex) && this.isSelectedCol(colIndex)) {
-            styleClasses.push("target-cell");
-        }
-
-        return styleClasses.join(" ");
+        
     }
 
     renderTableBody() {
