@@ -27,6 +27,7 @@ After the input has been filled in, on `Calculate` clicked:
 - Handle off bounds:
 	- skier code adjustment
 	- shoesize on empty column
+- Add Caption
 - Add disclaimer, table reference
 - Add license?
 

@@ -201,6 +201,21 @@ export class DINApp extends React.Component<{}, DINState> {
 
     // step 4
     showIntersectedCell() {
+        // check for outbound
+        let dinTable = this.getDINLookup();
+        const row = dinTable.find((d, i) => i == this.state.selectedRow);
+        let shoeSizeIdx = this.state.selectedShoeSize;
+        if (row.values[shoeSizeIdx] == null) {
+            // require adjustment:
+            if (shoeSizeIdx < (row.values.length / 2)) {
+                while (row.values[++shoeSizeIdx] == null);
+            } else {
+                while (row.values[--shoeSizeIdx] == null);
+            }
+            this.setState({ selectedShoeSize: shoeSizeIdx });
+        }
+
+
         this.setState({
             showTargetDIN: true
         });
@@ -268,11 +283,11 @@ export class DINApp extends React.Component<{}, DINState> {
                     <form>
                         <div className="textbox-group">
                             <label>Weight:</label>
-                            <input type="text" ref={this.weight} placeholder="kg"/>
+                            <input type="number" ref={this.weight} placeholder="kg"/>
                         </div>
                         <div className="textbox-group">
                             <label>Height:</label>
-                            <input type="text" ref={this.height} placeholder="cm"/>
+                            <input type="number" ref={this.height} placeholder="cm"/>
                         </div>
                         <div className="radio-group">
                             <label className="label-text">[?]Skier Level:</label>
@@ -295,7 +310,7 @@ export class DINApp extends React.Component<{}, DINState> {
                         </div>
                         <div className="textbox-group">
                             <label>Boot Size:</label>
-                            <input type="text" ref={this.shoesize}/>
+                            <input type="number" ref={this.shoesize}/>
                         </div>
                     </form>
 
