@@ -28,6 +28,7 @@ export interface DINState {
     selectedSkierLevel: number,
     showTargetDIN: boolean,
     targetDIN: number,
+    showWalkThrough: boolean,
 }
 
 export interface Interval {

@@ -32,7 +32,7 @@ export class DINChart extends React.Component<DINProps> {
          *  hightlight col => nop (done in col-group)
          */
         if (!din) {
-            return "null-din";
+            return "null-td";
         }
 
         if (this.props.showTargetDIN && this.isSelectedRow(rowIndex) && this.isSelectedCol(colIndex)) {

@@ -28,7 +28,8 @@ export class DINApp extends React.Component<{}, DINState> {
             selectedShoeSize: -1,
             selectedSkierLevel: -1,
             showTargetDIN: false,
-            targetDIN: 0
+            targetDIN: 0,
+            showWalkThrough: false,
         } as DINState;
 
         this.onRadioButtonChanged = this.onRadioButtonChanged.bind(this);
@@ -237,6 +238,10 @@ export class DINApp extends React.Component<{}, DINState> {
         })
     }
 
+    toggleWalkthrough() {
+        this.setState({ showWalkThrough: !this.state.showWalkThrough });
+    }
+
     render() {
         return (
             <div className="main">
@@ -259,56 +264,67 @@ export class DINApp extends React.Component<{}, DINState> {
                 </div>
                 <div className="din-inputs">
                     <h2>DIN inputs</h2>
+
+                    <form>
+                        <div className="textbox-group">
+                            <label>Weight:</label>
+                            <input type="text" ref={this.weight} placeholder="kg"/>
+                        </div>
+                        <div className="textbox-group">
+                            <label>Height:</label>
+                            <input type="text" ref={this.height} placeholder="cm"/>
+                        </div>
+                        <div className="radio-group">
+                            <label className="label-text">[?]Skier Level:</label>
+                            <label>
+                                <input type="radio" name="skier_level" value="0" checked={this.state.selectedSkierLevel == 0} onChange={this.onRadioButtonChanged} />
+                                Level 1
+                            </label>
+                            <label>
+                                <input type="radio" name="skier_level" value="1" checked={this.state.selectedSkierLevel == 1} onChange={this.onRadioButtonChanged} />
+                                Level 2
+                            </label>
+                            <label>
+                                <input type="radio" name="skier_level" value="2" checked={this.state.selectedSkierLevel == 2} onChange={this.onRadioButtonChanged} />
+                                Level 3
+                            </label>
+                        </div>
+                        <div className="textbox-group">
+                            <label>Age:</label>
+                            <input type="number" ref={this.age}/>
+                        </div>
+                        <div className="textbox-group">
+                            <label>Boot Size:</label>
+                            <input type="text" ref={this.shoesize}/>
+                        </div>
+                    </form>
+
+                    <br />
+
                     <div className="textbox-group">
-                        <label>Weight</label>
-                        <input type="text" ref={this.weight} />
-                    </div>
-                    <div className="textbox-group">
-                        <label>Height</label>
-                        <input type="text" ref={this.height}/>
-                    </div>
-                    <div className="radio-group">
-                        <p>Skier Level</p>
-                        <label>
-                            <input type="radio" name="skier_level" value="0" checked={this.state.selectedSkierLevel == 0} onChange={this.onRadioButtonChanged} />
-                            Level 1
-                        </label>
-                        <label>
-                            <input type="radio" name="skier_level" value="1" checked={this.state.selectedSkierLevel == 1} onChange={this.onRadioButtonChanged} />
-                            Level 2
-                        </label>
-                        <label>
-                            <input type="radio" name="skier_level" value="2" checked={this.state.selectedSkierLevel == 2} onChange={this.onRadioButtonChanged} />
-                            Level 3
-                        </label>
-                    </div>
-                    <div className="textbox-group">
-                        <label>Age</label>
-                        <input type="number" ref={this.age}/>
-                    </div>
-                    <div className="textbox-group">
-                        <label>Shoe Size</label>
-                        <input type="text" ref={this.shoesize}/>
+                        <label>DIN:</label>
+                        <input type="text" disabled value={this.state.targetDIN} />
+                        <button onClick={() => this.displayResult()}>Display Result</button>
+                        <button onClick={() => this.reset()}>Reset</button>
                     </div>
 
                     <br/>
-                    <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
-                    <br />
-                    <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
-                    <br />
-                    <button onClick={() => this.adjustSkierCode()}>2: Adjust skier code by age and skill</button>
-                    <br />
-                    <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
-                    <br />
-                    <button onClick={() => this.showIntersectedCell()}>4: Show Intersection </button>
-                    <br />
-                    <button onClick={() => this.displayResult()}>5: Display Result</button>
-                    <br />
-                    <button onClick={() => this.reset()}>Reset</button>
-                    <label>
-                        DIN:
-                        <input type="text" disabled value={this.state.targetDIN}/>
+                    <label onClick={() => this.toggleWalkthrough()}>
+                        {this.state.showWalkThrough ? "I am good!" : "Walk me through!" }
                     </label>
+                    <div className={ this.state.showWalkThrough ? "" : "hidden" }>
+                        <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
+                        <br />
+                        <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
+                        <br />
+                        <button onClick={() => this.adjustSkierCode()}>2: Adjust skier code by age and skill</button>
+                        <br />
+                        <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
+                        <br />
+                        <button onClick={() => this.showIntersectedCell()}>4: Show Intersection </button>
+                        <br />
+                    </div>
+                    
                 </div>
             </div>
         );
