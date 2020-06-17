@@ -25,8 +25,8 @@ After the input has been filled in, on `Calculate` clicked:
 
 ### Todo:
 - Handle off bounds:
-	- skier code adjustment
-	- shoesize on empty column
+	- [X] skier code adjustment
+	- [X] shoesize on empty column
 - Add Caption
 - Add disclaimer, table reference
 - Add license?

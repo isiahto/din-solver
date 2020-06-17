@@ -179,7 +179,7 @@ export class DINApp extends React.Component<{}, DINState> {
         this.setState({
             selectedHeight: -1,
             selectedWeight: -1,
-            selectedRow: this.state.selectedRow + adjustment
+            selectedRow: Math.max(this.state.selectedRow + adjustment, 0) // prevent out of bound.
         });
     }
 
