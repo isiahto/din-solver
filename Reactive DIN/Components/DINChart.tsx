@@ -17,7 +17,7 @@ export class DINChart extends React.Component<DINProps> {
     }
 
     isSelectedCol(colIndex: number) {
-        return colIndex == this.props.selectedShoeSize;
+        return colIndex == this.props.adjustedShoeSize;
     }
 
     isSelectedRow(rowIndex: number) {

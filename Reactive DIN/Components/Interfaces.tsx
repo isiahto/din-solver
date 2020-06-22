@@ -25,6 +25,7 @@ export interface DINState {
     selectedHeight: number,
     selectedCode: number,
     selectedShoeSize: number,
+    adjustedShoeSize: number,
     selectedSkierLevel: number,
     showTargetDIN: boolean,
     targetDIN: number,
@@ -51,6 +52,7 @@ export interface BodyMassInterval {
 export interface DINProps {
     selectedCode: number,
     selectedShoeSize: number,
+    adjustedShoeSize: number,
     DINCodes: DINCodes[],
     shoeSizes: ShoeSizeInterval,
     showTargetDIN: boolean,

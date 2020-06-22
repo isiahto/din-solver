@@ -195,7 +195,8 @@ export class DINApp extends React.Component<{}, DINState> {
         let shoesizeColIdx = this.getShoeSizeIndex(parseInt(this.shoesize.current.value));
 
         this.setState({
-            selectedShoeSize: shoesizeColIdx // offset skier code column
+            selectedShoeSize: shoesizeColIdx,
+            adjustedShoeSize: shoesizeColIdx
         });
     }
 
@@ -212,7 +213,7 @@ export class DINApp extends React.Component<{}, DINState> {
             } else {
                 while (row.values[--shoeSizeIdx] == null);
             }
-            this.setState({ selectedShoeSize: shoeSizeIdx });
+            this.setState({ adjustedShoeSize: shoeSizeIdx });
         }
 
 
@@ -257,6 +258,16 @@ export class DINApp extends React.Component<{}, DINState> {
         this.setState({ showWalkThrough: !this.state.showWalkThrough });
     }
 
+    validateInputs(): boolean {
+        //var c1 = parseInt(this.weight?.current.value) >= 10;
+        //var c2 = parseInt(this.height?.current.value) > 0;
+        //var c3 = parseInt(this.age?.current.value) > 0;
+        //var c4 = parseInt(this.shoesize?.current.value) > 0;
+        //var c5 = this.state.selectedSkierLevel >= 0;
+        //return c1 && c2 && c3 && c4 && c5;
+        return false;
+    }
+
     render() {
         return (
             <div className="main">
@@ -272,6 +283,7 @@ export class DINApp extends React.Component<{}, DINState> {
                         <DINChart
                             selectedCode={this.state.selectedRow}
                             selectedShoeSize={this.state.selectedShoeSize}
+                            adjustedShoeSize={this.state.adjustedShoeSize}
                             showTargetDIN={this.state.showTargetDIN}
                             DINCodes={this.getDINLookup()}
                             shoeSizes={this.getShoeSizes()} />
@@ -319,7 +331,7 @@ export class DINApp extends React.Component<{}, DINState> {
                     <div className="textbox-group">
                         <label>DIN:</label>
                         <input type="text" disabled value={this.state.targetDIN} />
-                        <button onClick={() => this.displayResult()}>Display Result</button>
+                        <button onClick={() => this.displayResult()} disabled={ this.validateInputs() }>Display Result</button>
                         <button onClick={() => this.reset()}>Reset</button>
                     </div>
 
@@ -328,15 +340,15 @@ export class DINApp extends React.Component<{}, DINState> {
                         {this.state.showWalkThrough ? "I am good!" : "Walk me through!" }
                     </label>
                     <div className={ this.state.showWalkThrough ? "" : "hidden" }>
-                        <button onClick={() => this.onButtonClicked()}>1a: Match Height/Weight</button>
+                        <button onClick={() => this.onButtonClicked()}>Step 1: Match Height/Weight</button>
                         <br />
-                        <button onClick={() => this.chooseRowWithSmallerValue()}>1b: Find the row with smaller value</button>
+                        <button onClick={() => this.chooseRowWithSmallerValue()}>Step 2: Find the row with smaller value</button>
                         <br />
-                        <button onClick={() => this.adjustSkierCode()}>2: Adjust skier code by age and skill</button>
+                        <button onClick={() => this.adjustSkierCode()}>Step 3: Adjust skier code by age and skill</button>
                         <br />
-                        <button onClick={() => this.hightlightShoeSizeColumn()}>3: Hightlight shoesize Column</button>
+                        <button onClick={() => this.hightlightShoeSizeColumn()}>Step 4: Hightlight shoesize Column</button>
                         <br />
-                        <button onClick={() => this.showIntersectedCell()}>4: Show Intersection </button>
+                        <button onClick={() => this.showIntersectedCell()}>Step 5: Show Intersection </button>
                         <br />
                     </div>
                     
